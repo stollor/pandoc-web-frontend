@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.pnpm-store
+pandoc-3.1.11.1
 
 # Editor directories and files
 .vscode/*
