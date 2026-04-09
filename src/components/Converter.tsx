@@ -8,6 +8,7 @@ const FORMATS: { label: string; value: FileFormat }[] = [
   { label: 'HTML', value: 'html' },
   { label: 'LaTeX', value: 'latex' },
   { label: 'Word (.docx)', value: 'docx' },
+  { label: 'PDF Document', value: 'pdf' },
   { label: 'reStructuredText', value: 'rst' },
   { label: 'Emacs Org', value: 'org' },
   { label: 'EPUB', value: 'epub' },

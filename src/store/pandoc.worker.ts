@@ -11,9 +11,11 @@ self.onmessage = async (event) => {
     } else if (type === 'CONVERT') {
       const { text, inputFormat, outputFormat } = payload;
       
+      const targetFormat = outputFormat === 'pdf' ? 'html' : outputFormat;
+
       const options = {
         from: inputFormat,
-        to: outputFormat,
+        to: targetFormat,
         standalone: true
       };
 
@@ -27,8 +29,9 @@ self.onmessage = async (event) => {
     } else if (type === 'CONVERT_FILE') {
       const { fileData, fileName, inputFormat, outputFormat } = payload;
       
+      const targetFormat = outputFormat === 'pdf' ? 'html' : outputFormat;
       const virtualFileName = `input.${inputFormat}`;
-      const virtualOutputName = `output.${outputFormat}`;
+      const virtualOutputName = `output.${targetFormat}`;
       
       // Use Blob to pass binary data to pandoc-wasm virtual FS
       const blob = new Blob([fileData]);
@@ -38,14 +41,14 @@ self.onmessage = async (event) => {
 
       const options = {
         from: inputFormat,
-        to: outputFormat,
+        to: targetFormat,
         standalone: true,
         'input-files': [virtualFileName]
       };
 
       // If the target is a binary format (docx, epub), we must instruct Pandoc 
       // to write to a virtual output file instead of stdout
-      const isBinaryOutput = ['docx', 'epub'].includes(outputFormat);
+      const isBinaryOutput = ['docx', 'epub'].includes(targetFormat);
       if (isBinaryOutput) {
         options['output-file'] = virtualOutputName;
       }

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { convertToHtml, convertFromHtml } from './localConverter';
 import PandocWorker from './pandoc.worker?worker';
 
-export type FileFormat = 'markdown' | 'html' | 'latex' | 'docx' | 'rst' | 'org' | 'epub';
+export type FileFormat = 'markdown' | 'html' | 'latex' | 'docx' | 'rst' | 'org' | 'epub' | 'pdf';
 
 interface ConverterState {
   inputText: string;

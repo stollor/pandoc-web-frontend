@@ -2,6 +2,7 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import html2pdf from 'html2pdf.js';
 import { FileFormat } from './useConverterStore';
 
 // 将不同格式的输入转换为安全的 HTML（核心中间态）
@@ -131,6 +132,41 @@ export const convertFromHtml = async (html: string, outputFormat: FileFormat, or
     } catch (e) {
       console.error('EPUB conversion failed', e);
       throw new Error('EPUB 电子书生成失败');
+    }
+  }
+
+  if (outputFormat === 'pdf') {
+    try {
+      // Create a temporary hidden div to hold the HTML for rendering
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      
+      // Apply some basic styling for the PDF to look good
+      tempDiv.style.padding = '20px';
+      tempDiv.style.fontFamily = 'Arial, sans-serif';
+      tempDiv.style.lineHeight = '1.6';
+      tempDiv.style.color = '#000';
+      tempDiv.style.background = '#fff';
+      
+      document.body.appendChild(tempDiv);
+      
+      const opt = {
+        margin:       10,
+        filename:     `converted_${Date.now()}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      await html2pdf().set(opt).from(tempDiv).save();
+      
+      // Clean up
+      document.body.removeChild(tempDiv);
+      
+      return `文件已成功转换为 PDF 并开始下载！\n\n所有运算均在您的浏览器本地安全完成，未上传任何数据。`;
+    } catch (e) {
+      console.error('PDF conversion failed', e);
+      throw new Error('PDF 文件生成失败');
     }
   }
 
