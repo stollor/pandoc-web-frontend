@@ -3,12 +3,12 @@ import react from '@vitejs/plugin-react'
 import tsconfigPaths from "vite-tsconfig-paths";
 import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
-import wasm from 'vite-plugin-wasm';
 import topLevelAwait from 'vite-plugin-top-level-await';
 
 // https://vite.dev/config/
 export default defineConfig({
   base: './',
+  assetsInclude: ['**/*.wasm'],
   server: {
     watch: {
       ignored: ['**/node_modules/**', '**/.git/**', '**/.pnpm-store/**']
@@ -36,7 +36,12 @@ export default defineConfig({
     }), 
     tsconfigPaths(),
     nodePolyfills(),
-    wasm(),
     topLevelAwait()
   ],
+  worker: {
+    format: 'es',
+    plugins: () => [
+      topLevelAwait()
+    ]
+  }
 })
