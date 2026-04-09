@@ -32,7 +32,9 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
-    nodePolyfills(),
+    nodePolyfills({
+      exclude: ['fs']
+    }),
     topLevelAwait()
   ],
   worker: {
