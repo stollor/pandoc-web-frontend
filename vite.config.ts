@@ -8,6 +8,7 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: './',
   server: {
     watch: {
       ignored: ['**/node_modules/**', '**/.git/**', '**/.pnpm-store/**']
