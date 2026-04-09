@@ -8,15 +8,6 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 export default defineConfig({
   base: './',
   assetsInclude: ['**/*.wasm'],
-  build: {
-    rollupOptions: {
-      output: {
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]',
-      },
-    },
-  },
   server: {
     watch: {
       ignored: ['**/node_modules/**', '**/.git/**', '**/.pnpm-store/**']
@@ -24,6 +15,13 @@ export default defineConfig({
   },
   build: {
     sourcemap: 'hidden',
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+      },
+    },
   },
   plugins: [
     react({
