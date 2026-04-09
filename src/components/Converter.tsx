@@ -25,7 +25,7 @@ export default function Converter() {
     setInputFormat,
     setOutputFormat,
     convert,
-    convertFile
+    loadFile
   } = useConverterStore();
 
   const [copied, setCopied] = useState(false);
@@ -53,7 +53,7 @@ export default function Converter() {
     const file = e.target.files?.[0];
     if (!file) return;
     
-    convertFile(file);
+    loadFile(file);
     // Reset input so the same file can be uploaded again if needed
     if (fileInputRef.current) {
       fileInputRef.current.value = '';

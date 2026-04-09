@@ -41,30 +41,7 @@ export const convertFromHtml = async (html: string, outputFormat: FileFormat, or
   }
 
   if (outputFormat === 'docx') {
-    try {
-      const header = `
-        <html xmlns:o='urn:schemas-microsoft-com:office:office' 
-              xmlns:w='urn:schemas-microsoft-com:office:word' 
-              xmlns='http://www.w3.org/TR/REC-html40'>
-        <head>
-            <meta charset='utf-8'>
-            <title>Export</title>
-        </head>
-        <body>
-      `;
-      const footer = "</body></html>";
-      const fullHTML = header + html + footer;
-
-      const blob = new Blob(['\ufeff', fullHTML], {
-          type: 'application/msword;charset=utf-8'
-      });
-      
-      saveAs(blob, `converted_${Date.now()}.doc`);
-      return `文件已成功转换为 Word 兼容格式 (.doc) 并开始下载！\n\n所有运算均在您的浏览器本地安全完成，未上传任何数据。`;
-    } catch (e) {
-      console.error('Word conversion failed', e);
-      throw new Error('Word 文档生成失败');
-    }
+    return `纯前端降级模式下暂不支持生成真正的 Word 文档，请等待 WebAssembly 引擎加载完成。`;
   }
 
   if (outputFormat === 'epub') {
