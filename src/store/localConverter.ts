@@ -141,12 +141,37 @@ export const convertFromHtml = async (html: string, outputFormat: FileFormat, or
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
       
-      // Apply some basic styling for the PDF to look good
-      tempDiv.style.padding = '20px';
-      tempDiv.style.fontFamily = 'Arial, sans-serif';
-      tempDiv.style.lineHeight = '1.6';
-      tempDiv.style.color = '#000';
-      tempDiv.style.background = '#fff';
+      // Apply github-markdown style classes and base typography
+      tempDiv.className = 'markdown-body';
+      tempDiv.style.padding = '30px';
+      tempDiv.style.color = '#24292e';
+      tempDiv.style.background = '#ffffff';
+      
+      // Inject github-markdown-css explicitly for the PDF renderer
+      const styleElement = document.createElement('style');
+      styleElement.innerHTML = `
+        .markdown-body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"; font-size: 16px; line-height: 1.5; word-wrap: break-word; }
+        .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 { margin-top: 24px; margin-bottom: 16px; font-weight: 600; line-height: 1.25; }
+        .markdown-body h1 { font-size: 2em; padding-bottom: .3em; border-bottom: 1px solid #eaecef; }
+        .markdown-body h2 { font-size: 1.5em; padding-bottom: .3em; border-bottom: 1px solid #eaecef; }
+        .markdown-body h3 { font-size: 1.25em; }
+        .markdown-body h4 { font-size: 1em; }
+        .markdown-body p, .markdown-body blockquote, .markdown-body ul, .markdown-body ol, .markdown-body dl, .markdown-body table, .markdown-body pre, .markdown-body details { margin-top: 0; margin-bottom: 16px; }
+        .markdown-body ul, .markdown-body ol { padding-left: 2em; list-style: inherit; }
+        .markdown-body blockquote { padding: 0 1em; color: #6a737d; border-left: .25em solid #dfe2e5; }
+        .markdown-body table { display: block; width: 100%; overflow: auto; border-collapse: collapse; }
+        .markdown-body table th { font-weight: 600; }
+        .markdown-body table th, .markdown-body table td { padding: 6px 13px; border: 1px solid #dfe2e5; }
+        .markdown-body table tr { background-color: #fff; border-top: 1px solid #c6cbd1; }
+        .markdown-body table tr:nth-child(2n) { background-color: #f6f8fa; }
+        .markdown-body img { max-width: 100%; box-sizing: content-box; background-color: #fff; }
+        .markdown-body code { padding: .2em .4em; margin: 0; font-size: 85%; background-color: rgba(27,31,35,.05); border-radius: 3px; font-family: SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace; }
+        .markdown-body pre { word-wrap: normal; padding: 16px; overflow: auto; font-size: 85%; line-height: 1.45; background-color: #f6f8fa; border-radius: 3px; }
+        .markdown-body pre code { display: inline; max-width: auto; padding: 0; margin: 0; overflow: visible; line-height: inherit; word-wrap: normal; background-color: transparent; border: 0; }
+        .markdown-body a { color: #0366d6; text-decoration: none; }
+        .markdown-body hr { height: .25em; padding: 0; margin: 24px 0; background-color: #e1e4e8; border: 0; }
+      `;
+      tempDiv.appendChild(styleElement);
       
       document.body.appendChild(tempDiv);
       
