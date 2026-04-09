@@ -32,7 +32,7 @@ export default function Home() {
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             支持 Markdown, HTML, LaTeX, Word, EPUB 等数十种格式互转。
-            无需安装任何软件，**所有转换均在您的浏览器本地完成，绝对安全，不上传任何数据。**
+            无需安装任何软件，<strong>所有转换均在您的浏览器本地完成，绝对安全，不上传任何数据。</strong>
           </p>
         </motion.div>
 
